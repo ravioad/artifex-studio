@@ -21,7 +21,7 @@ const VerifyEmailCompletePage: React.FC = () => {
         if (accessToken && refreshToken) {
           try {
             // Send tokens to your backend to set HTTP-only cookies
-            const response = await apiClient.post('/auth/verify-email-complete', {
+            const response = await apiClient.post('/api/auth/verify-email-complete', {
               accessToken,
               refreshToken,
             });
