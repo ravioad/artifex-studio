@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Layout from '@/components/Layout';
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -264,7 +263,7 @@ export default function Signup() {
 
         {/* Benefits Card */}
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl mt-8">
-          <h3 className="text-xl font-semibold text-white mb-6">What you'll get:</h3>
+          <h3 className="text-xl font-semibold text-white mb-6">What you&apos;ll get:</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex items-center space-x-3">
               <div className="flex-shrink-0 w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">

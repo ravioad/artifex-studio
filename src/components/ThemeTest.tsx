@@ -283,7 +283,7 @@ export default function ThemeTest() {
         <div className="card">
           <h3 className="text-heading-3 mb-4">Automatic Dark Mode</h3>
           <p className="text-body mb-4">
-            This theme automatically adapts to your system's dark mode preference. 
+            This theme automatically adapts to your system&apos;s dark mode preference. 
             Try switching your system theme to see the colors change!
           </p>
           <div className="flex flex-wrap gap-4">

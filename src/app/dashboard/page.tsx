@@ -82,7 +82,7 @@ export default function Dashboard() {
             <div className="card">
               <h1 className="text-heading-1 mb-2">Welcome back, John!</h1>
               <p className="text-body text-text-secondary">
-                Ready to create some amazing content today? Here's what's happening with your projects.
+                Ready to create some amazing content today? Here&apos;s what&apos;s happening with your projects.
               </p>
             </div>
 
@@ -178,14 +178,14 @@ export default function Dashboard() {
                   <div className="flex items-center space-x-3">
                     <div className="w-2 h-2 rounded-full bg-success-500"></div>
                     <div className="flex-1">
-                      <p className="text-body-small">Blog post "AI in Marketing" published</p>
+                      <p className="text-body-small">Blog post &quot;AI in Marketing&quot; published</p>
                       <p className="text-caption text-text-tertiary">2 hours ago</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-2 h-2 rounded-full bg-primary-500"></div>
                     <div className="flex-1">
-                      <p className="text-body-small">New draft "Content Strategy Guide" created</p>
+                      <p className="text-body-small">New draft &quot;Content Strategy Guide&quot; created</p>
                       <p className="text-caption text-text-tertiary">1 day ago</p>
                     </div>
                   </div>
