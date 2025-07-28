@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
+  const { user, logout } = useAuth();
 
   return (
     <div className="min-h-screen bg-background">
@@ -66,8 +68,25 @@ export default function Dashboard() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                 </svg>
               </button>
-              <div className="w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center">
-                <span className="text-text-inverse text-sm font-medium">JD</span>
+              <div className="relative group">
+                <div className="w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center cursor-pointer">
+                  <span className="text-text-inverse text-sm font-medium">
+                    {user?.name?.charAt(0).toUpperCase() || 'U'}
+                  </span>
+                </div>
+                <div className="absolute right-0 mt-2 w-48 bg-background-card border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <div className="py-2">
+                    <div className="px-4 py-2 text-sm text-text-secondary border-b border-border">
+                      {user?.email}
+                    </div>
+                    <button
+                      onClick={logout}
+                      className="w-full text-left px-4 py-2 text-sm text-text-primary hover:bg-background-secondary transition-colors"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -80,7 +99,7 @@ export default function Dashboard() {
           <div className="space-y-8">
             {/* Welcome Section */}
             <div className="card">
-              <h1 className="text-heading-1 mb-2">Welcome back, John!</h1>
+              <h1 className="text-heading-1 mb-2">Welcome back, {user?.name || 'User'}!</h1>
               <p className="text-body text-text-secondary">
                 Ready to create some amazing content today? Here&apos;s what&apos;s happening with your projects.
               </p>

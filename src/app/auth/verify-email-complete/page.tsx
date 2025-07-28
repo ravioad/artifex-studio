@@ -3,12 +3,26 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import apiClient from '@/utils/api';
+import { useAuth } from '@/contexts/AuthContext';
 
 
 const VerifyEmailCompletePage: React.FC = () => {
     const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
     const [message, setMessage] = useState<string>('Verifying your email...');
     const router = useRouter();
+    const { loading: authLoading } = useAuth();
+
+    // Show loading spinner while checking authentication
+    if (authLoading) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-background animate-fade-in">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
+            <p className="text-text-secondary animate-pulse">Loading...</p>
+          </div>
+        </div>
+      );
+    }
   
     useEffect(() => {
       const handleVerification = async () => {
