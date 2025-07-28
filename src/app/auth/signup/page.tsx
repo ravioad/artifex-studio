@@ -6,6 +6,16 @@ import { useAuth } from '@/contexts/AuthContext';
 
 export default function Signup() {
   const { user, loading } = useAuth();
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    agreeToTerms: false,
+    marketingEmails: false
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   // Show loading spinner while checking authentication
   if (loading || user) {
@@ -18,16 +28,6 @@ export default function Signup() {
       </div>
     );
   }
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    agreeToTerms: false,
-    marketingEmails: false
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};

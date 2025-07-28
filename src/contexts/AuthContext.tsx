@@ -4,7 +4,6 @@ import React, { createContext, useContext, useEffect, useState, ReactNode } from
 import { useRouter, usePathname } from 'next/navigation';
 import apiClient from '@/utils/api';
 import { User } from '@/models/User';
-import { UserResponse } from '@/models/UserResponse';
 
 interface AuthContextType {
   user: User | null;

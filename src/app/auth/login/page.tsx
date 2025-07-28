@@ -5,19 +5,7 @@ import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function Login() {
-    const { user, loading } = useAuth();
-
-  // Show loading spinner while checking authentication
-  if (loading || user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background animate-fade-in">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
-          <p className="text-text-secondary animate-pulse">Loading...</p>
-        </div>
-      </div>
-    );
-  }
+    const { user, loading, login } = useAuth();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -25,7 +13,18 @@ export default function Login() {
     });
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-    const { login } = useAuth();
+
+    // Show loading spinner while checking authentication
+    if (loading || user) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-background animate-fade-in">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
+            <p className="text-text-secondary animate-pulse">Loading...</p>
+          </div>
+        </div>
+      );
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
