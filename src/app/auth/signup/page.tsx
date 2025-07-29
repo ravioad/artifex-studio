@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function Signup() {
-  const { user, loading } = useAuth();
+  const { user, loading, signup } = useAuth();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -62,18 +62,22 @@ export default function Signup() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!validateForm()) {
       return;
     }
 
     setIsLoading(true);
-
-    // Simulate API call
-    setTimeout(() => {
+    setErrors({});
+    try {
+      await signup(formData.email, formData.password, formData.fullName);
+      // Login successful - user will be redirected to dashboard by AuthContext
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { error?: string } }; message?: string };
+      console.log(error);
+      // setError(error.response?.data?.error || error.message || 'Login failed. Please try again.');
+    } finally {
       setIsLoading(false);
-      // Handle signup logic here
-    }, 2000);
+    }
   };
 
   return (

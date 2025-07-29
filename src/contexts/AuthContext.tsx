@@ -35,6 +35,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const pathname = usePathname();
 
   const checkAuthStatus = async () => {
+    console.log('checkAuthStatus');
     try {
       const response = await apiClient.get('/api/me');
       console.log('Auth status check response:', response.data);
