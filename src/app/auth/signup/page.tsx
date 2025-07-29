@@ -2,10 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function Signup() {
   const { user, loading, signup } = useAuth();
+  const router = useRouter();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -70,11 +72,12 @@ export default function Signup() {
     setErrors({});
     try {
       await signup(formData.email, formData.password, formData.fullName);
-      // Login successful - user will be redirected to dashboard by AuthContext
+      // Signup successful - redirect to check email page
+      router.push('/auth/check-email');
     } catch (err: unknown) {
       const error = err as { response?: { data?: { error?: string } }; message?: string };
       console.log(error);
-      // setError(error.response?.data?.error || error.message || 'Login failed. Please try again.');
+      // setError(error.response?.data?.error || error.message || 'Signup failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
