@@ -56,36 +56,36 @@ export default function Home() {
 
           {/* Hero Visual */}
           <div className="relative">
-            <div className="gradient-creative rounded-2xl p-8 mb-8">
-              <div className="glass rounded-xl p-6">
+            <div className="gradient-creative rounded-2xl p-4 sm:p-6 lg:p-8 mb-8 overflow-hidden">
+              <div className="glass rounded-xl p-4 sm:p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-3 h-3 rounded-full bg-accent-emerald"></div>
-                    <div className="w-3 h-3 rounded-full bg-accent-amber"></div>
-                    <div className="w-3 h-3 rounded-full bg-accent-rose"></div>
+                  <div className="flex items-center space-x-2 sm:space-x-3">
+                    <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-accent-emerald"></div>
+                    <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-accent-amber"></div>
+                    <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-accent-rose"></div>
                   </div>
-                  <span className="text-caption text-text-inverse">AI Content Editor</span>
+                  <span className="text-caption text-text-inverse text-xs sm:text-sm">AI Content Editor</span>
                 </div>
-                <div className="space-y-3">
-                  <div className="h-6 flex items-center">
-                    <span className="text-white text-sm font-mono">
-                      <span className="typing-line-1">Creating engaging blog post about AI trends...</span>
-                    </span>
+                <div className="space-y-2 sm:space-y-3">
+                  <div className="h-5 sm:h-6 flex items-center overflow-hidden">
+                    <div className="text-white text-xs sm:text-sm font-mono overflow-hidden">
+                      <span className="typing-line-1">Creating AI blog post...</span>
+                    </div>
                   </div>
-                  <div className="h-6 flex items-center">
-                    <span className="text-white text-sm font-mono opacity-75">
-                      <span className="typing-line-2">Generating marketing copy for social media...</span>
-                    </span>
+                  <div className="h-5 sm:h-6 flex items-center overflow-hidden">
+                    <div className="text-white text-xs sm:text-sm font-mono opacity-75 overflow-hidden">
+                      <span className="typing-line-2">Generating marketing copy...</span>
+                    </div>
                   </div>
-                  <div className="h-6 flex items-center">
-                    <span className="text-white text-sm font-mono opacity-50">
-                      <span className="typing-line-3">Optimizing content for SEO...</span>
-                    </span>
+                  <div className="h-5 sm:h-6 flex items-center overflow-hidden">
+                    <div className="text-white text-xs sm:text-sm font-mono opacity-50 overflow-hidden">
+                      <span className="typing-line-3">Optimizing for SEO...</span>
+                    </div>
                   </div>
-                  <div className="h-6 flex items-center">
-                    <span className="text-white text-sm font-mono opacity-25">
-                      <span className="typing-line-4">Analyzing content performance...</span>
-                    </span>
+                  <div className="h-5 sm:h-6 flex items-center overflow-hidden">
+                    <div className="text-white text-xs sm:text-sm font-mono opacity-25 overflow-hidden">
+                      <span className="typing-line-4">Analyzing performance...</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -218,14 +218,14 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center">
             <h3 className="text-heading-3 text-gradient-creative font-bold mb-4">Artifex Studio</h3>
-            <p className="text-body-small text-text-secondary mb-6 max-w-2xl mx-auto">
+            <p className="footer-description">
               Empowering content creators with AI-powered tools for the modern digital landscape.
             </p>
-            <div className="flex justify-center space-x-6 mb-8">
-              <Link href="/terms" className="text-body-small text-text-secondary hover:text-text-primary transition-colors">
+            <div className="mb-8" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: '1.5rem' }}>
+              <Link href="/terms" className="text-body-small text-text-secondary hover:text-text-primary transition-colors whitespace-nowrap">
                 Terms of Service
               </Link>
-              <Link href="/privacy" className="text-body-small text-text-secondary hover:text-text-primary transition-colors">
+              <Link href="/privacy" className="text-body-small text-text-secondary hover:text-text-primary transition-colors whitespace-nowrap">
                 Privacy Policy
               </Link>
             </div>

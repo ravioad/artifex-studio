@@ -741,6 +741,7 @@ h1.text-gradient-secondary,
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
+  width: 0;
   animation: 
     typing 4s steps(40, end) infinite,
     fadeOut 8s ease-in-out infinite;
@@ -751,6 +752,7 @@ h1.text-gradient-secondary,
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
+  width: 0;
   animation: 
     typing 4s steps(40, end) infinite 1s,
     fadeOut 8s ease-in-out infinite 1s;
@@ -761,6 +763,7 @@ h1.text-gradient-secondary,
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
+  width: 0;
   animation: 
     typing 4s steps(40, end) infinite 2s,
     fadeOut 8s ease-in-out infinite 2s;
@@ -771,6 +774,7 @@ h1.text-gradient-secondary,
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
+  width: 0;
   animation: 
     typing 4s steps(40, end) infinite 3s,
     fadeOut 8s ease-in-out infinite 3s;
@@ -828,6 +832,48 @@ body {
 
 .flex {
   display: flex !important;
+}
+
+.flex-row {
+  flex-direction: row !important;
+}
+
+.flex-col {
+  flex-direction: column !important;
+}
+
+/* Responsive flex utilities */
+@media (min-width: 640px) {
+  .sm\:flex-row {
+    flex-direction: row !important;
+  }
+  
+  .sm\:flex-col {
+    flex-direction: column !important;
+  }
+}
+
+/* Force horizontal layout for footer links */
+footer .flex-row {
+  flex-direction: row !important;
+  display: flex !important;
+}
+
+footer .space-x-6 > * + * {
+  margin-left: 1.5rem !important;
+}
+
+/* Footer text styling */
+.footer-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-weight: normal;
 }
 
 .items-center {
