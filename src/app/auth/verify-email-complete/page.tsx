@@ -63,23 +63,98 @@ const VerifyEmailCompletePage: React.FC = () => {
     }
   
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className=" max-w-lg bg-white p-8 rounded-lg shadow-md w-full text-center">
-          <h2 className="text-2xl font-bold mb-4 text-gray-800">Email Verification</h2>
-          {status === 'loading' && (
-            <p className="text-blue-600 animate-pulse">{message}</p>
-          )}
-          {status === 'success' && (
-            <p className="text-green-600">{message}</p>
-          )}
-          {status === 'error' && (
-            <p className="text-red-600">{message}</p>
-          )}
-          {status !== 'loading' && (
-            <p className="text-gray-600 text-sm mt-4">
-              You will be redirected shortly. If not, please proceed to the <a href="/auth/login" className="text-blue-500 hover:underline">login page</a>.
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 flex items-center justify-center">
+        <div className="w-full max-w-lg">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-white mb-3">Email Verification</h1>
+            <p className="text-lg text-slate-300 leading-relaxed">
+              Completing your account verification
             </p>
-          )}
+          </div>
+
+          {/* Main Card */}
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl">
+            {/* Status Icon */}
+            <div className="flex justify-center mb-6">
+              {status === 'loading' && (
+                <div className="w-16 h-16 rounded-full bg-blue-500/20 border-2 border-blue-500 flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400"></div>
+                </div>
+              )}
+              {status === 'success' && (
+                <div className="w-16 h-16 rounded-full bg-green-500/20 border-2 border-green-500 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              )}
+              {status === 'error' && (
+                <div className="w-16 h-16 rounded-full bg-red-500/20 border-2 border-red-500 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </div>
+              )}
+            </div>
+
+            {/* Status Message */}
+            <div className="text-center space-y-4">
+              {status === 'loading' && (
+                <div>
+                  <h2 className="text-xl font-semibold text-white mb-2">Verifying Your Email</h2>
+                  <p className="text-slate-300 animate-pulse">{message}</p>
+                </div>
+              )}
+              {status === 'success' && (
+                <div>
+                  <h2 className="text-xl font-semibold text-white mb-2">Verification Successful!</h2>
+                  <p className="text-slate-300">{message}</p>
+                </div>
+              )}
+              {status === 'error' && (
+                <div>
+                  <h2 className="text-xl font-semibold text-white mb-2">Verification Failed</h2>
+                  <p className="text-slate-300">{message}</p>
+                </div>
+              )}
+
+              {/* Action Links */}
+              {status !== 'loading' && (
+                <div className="pt-4">
+                  <p className="text-sm text-slate-400 mb-4">
+                    {status === 'success' 
+                      ? 'You will be redirected to your dashboard shortly.'
+                      : 'Please try again or contact support if the problem persists.'
+                    }
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                    <a 
+                      href="/auth/login" 
+                      className="bg-white/10 border border-white/20 text-white font-medium py-2 px-4 rounded-xl hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition-all duration-200"
+                    >
+                      Go to Login
+                    </a>
+                    {status === 'error' && (
+                      <a 
+                        href="/auth/signup" 
+                        className="bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium py-2 px-4 rounded-xl hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition-all duration-200"
+                      >
+                        Try Again
+                      </a>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="text-center mt-8">
+            <p className="text-xs text-slate-400">
+              Need help? <a href="/support" className="text-blue-400 hover:text-blue-300 transition-colors">Contact Support</a>
+            </p>
+          </div>
         </div>
       </div>
     );
