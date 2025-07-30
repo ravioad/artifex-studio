@@ -37,7 +37,7 @@ export default function AuthCallbackPage() {
             if (!accessToken || !refreshToken) {
                 setError('Login failed: Missing tokens from provider.');
                 setMessage('Redirecting to login page...');
-                setTimeout(() => router.push('/auth/login'), 3000); // Redirect after a delay
+                // setTimeout(() => router.push('/auth/login'), 3000); // Redirect after a delay
                 return;
             }
 
@@ -60,7 +60,7 @@ export default function AuthCallbackPage() {
 
                 // 3. Upon success, redirect to the dashboard
                 setMessage('Login successful! Redirecting...');
-                router.push('/dashboard');
+                // router.push('/dashboard');
             } catch (err: unknown) {
                 console.error('OAuth Callback Error:', err);
                 setError(
@@ -71,7 +71,7 @@ export default function AuthCallbackPage() {
                         : 'Login failed. Please try again.'
                 );
                 setMessage('Redirecting to login page...');
-                setTimeout(() => router.push('/login'), 3000); // Redirect after a delay
+                // setTimeout(() => router.push('/login'), 3000); // Redirect after a delay
             }
         };
 
