@@ -1,6 +1,24 @@
-# artifex-studio
+# Artifex Studio
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+An AI-powered content creation studio built with Next.js, featuring user authentication, dark theme design, and intelligent content generation tools. The platform enables creators to generate, edit, and publish compelling text content with cutting-edge AI assistance.
+
+## Features
+
+- 🔐 **User Authentication** - Secure login/signup with email verification
+- 🎨 **Dark Theme Design** - Modern, professional UI with glassmorphism effects
+- 🤖 **AI Content Generation** - Intelligent text creation and editing tools
+- 📱 **Responsive Design** - Optimized for all devices and screen sizes
+- ⚡ **Real-time Updates** - Smooth animations and interactive components
+- 🔒 **Route Protection** - Secure access control for authenticated users
+
+## Tech Stack
+
+- **Frontend**: Next.js 15, React 18, TypeScript
+- **Styling**: Tailwind CSS, Custom CSS Variables
+- **Authentication**: JWT, HTTP-only cookies
+- **State Management**: React Context API
+- **HTTP Client**: Axios with interceptors
+- **Deployment**: Vercel (recommended)
 
 ## Getting Started
 
