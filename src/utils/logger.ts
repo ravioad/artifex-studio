@@ -1,7 +1,7 @@
 import apiClient from "./api";
 
 interface UsageLogEntry {
-    event_type: 'ai_generate' | 'content_save' | 'content_publish' | 'login_attempt' | 'logout' | 'premium_feature_access';
+    event_type: 'ai_generate' | 'content_save' | 'content_publish' | 'login_attempt' | 'logout' | 'page_view'|'premium_feature_access';
     message?: string;
     details?: Record<string, unknown>;
 }
@@ -23,3 +23,6 @@ export const logAiGenerate = (details: Record<string, unknown>, message?: string
 
 export const logContentSave = (details: Record<string, unknown>, message?: string) =>
     logUsageToServer({ event_type: 'content_save', message, details });
+
+export const logPageView = (details: Record<string, unknown>, message?: string) =>
+    logUsageToServer({ event_type: 'page_view', message, details });

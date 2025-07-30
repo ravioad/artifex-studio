@@ -4,7 +4,7 @@ import React, { createContext, useContext, useEffect, useState, ReactNode } from
 import { useRouter, usePathname } from 'next/navigation';
 import apiClient from '@/utils/api';
 import { User } from '@/models/User';
-import { logLogin } from '@/utils/logger';
+import { logLogin, logPageView } from '@/utils/logger';
 
 interface AuthContextType {
   user: User | null;
@@ -38,14 +38,50 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const checkAuthStatus = async () => {
     console.log('checkAuthStatus');
+  
+    // Get full URL
+    const fullUrl = typeof window !== 'undefined' 
+      ? `${window.location.origin}${pathname}${window.location.search}${window.location.hash}`
+      : '';
+      
+    // Or simply use window.location.href for the complete URL
+    const completeUrl = typeof window !== 'undefined' ? window.location.href : '';
+
+    logPageView({
+      message: 'On Auth Provider (Checking auth status)',
+      details: {
+        "fullUrl": fullUrl,
+        "completeUrl": completeUrl,
+      }
+    })
+  
     try {
+      logPageView({
+        message: 'On Auth Provider (Initializing Auth Check)',
+        details: {
+          "Hi": "Hi!!!",
+        }
+      })
       const response = await apiClient.get('/api/me');
       console.log('Auth status check response:', response.data);
       setUser(response.data);
     } catch (error) {
+
+      logPageView({
+        message: 'On Auth Provider (Auth Check Error)',
+        details: {
+          "error": error,
+        }
+      })
       console.error('Auth status check error:', error);
       setUser(null);
     } finally {
+      logPageView({
+        message: 'On Auth Provider (Auth Check Finally)',
+        details: {
+          "Hi": "Hi Finally!!!",
+        }
+      })
       console.log('Auth status check finally');
       setLoading(false);
     }
