@@ -44,7 +44,7 @@ export default function AuthCallbackPage() {
                         'calling back refreshToken': refreshToken
                     }
                 })
-                setTimeout(() => router.push('/auth/login'), 3000); // Redirect after a delay
+                setTimeout(() => router.push('/auth/login'), 10000); // Redirect after a delay
                 return;
             }
 
@@ -74,7 +74,8 @@ export default function AuthCallbackPage() {
                         'calling back refreshToken': refreshToken
                     }
                 })
-                router.push('/dashboard');
+                setTimeout(() => router.push('/dashboard'), 10000);
+                // router.push('/dashboard');
             } catch (err: unknown) {
                 console.error('OAuth Callback Error:', err);
                 setError(
@@ -92,7 +93,7 @@ export default function AuthCallbackPage() {
                         'calling back refreshToken': refreshToken
                     }
                 })
-                setTimeout(() => router.push('/login'), 3000); // Redirect after a delay
+                setTimeout(() => router.push('/auth/login'), 10000); // Redirect after a delay
             }
         };
 
