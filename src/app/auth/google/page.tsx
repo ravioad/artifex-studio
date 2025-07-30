@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import apiClient from '@/utils/api';
+import { logLogin } from '@/utils/logger';
 
 export default function AuthCallbackPage() {
     const [message, setMessage] = useState('Processing your login...');
@@ -11,6 +12,13 @@ export default function AuthCallbackPage() {
   
     useEffect(() => {
       const handleOAuthCallback = async () => {
+        logLogin({
+            message: 'On Google Callback Page (Trying to get tokens from following url location)',
+            details: {
+                "window.location.hash": window.location.hash,
+                "window.location.hash.substring(1)": window.location.hash.substring(1),
+            }
+        })
         // 1. Extract tokens from URL hash
         console.log('handleOAuthCallback');
         console.log('window.location.hash', window.location.hash);
