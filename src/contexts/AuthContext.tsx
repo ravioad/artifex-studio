@@ -12,6 +12,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   signup: (email: string, password: string, name: string) => Promise<void>;
+  handleGoogleLogin: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -49,15 +50,50 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    // setError('');
+    try {
+      // 1. Call your Express.js backend to initiate the Google OAuth flow
+      // The `redirectTo` URL is where Supabase will send the user back after Google auth.
+      // This MUST be a URL on your Next.js frontend that can handle the OAuth callback.
+      const redirectFrontendUrl = `${window.location.origin}/auth/google`; // Dynamically get your frontend origin
+      console.log('redirectFrontendUrl', redirectFrontendUrl);
+      // const response = await apiClient.post('/auth/oauth/google-initiate', {
+      //   redirectTo: redirectFrontendUrl,
+      // });
+
+      // const oauthRedirectUrl = response.data.oauth_redirect_url;
+
+      // if (oauthRedirectUrl) {
+      //   // 2. Redirect the user's browser to the Google OAuth URL provided by your backend
+      //   // This is a full page redirect, as required by OAuth.
+      //   window.location.href = oauthRedirectUrl;
+      // } else {
+      //   console.log('Failed to get Google OAuth redirect URL from backend.');
+      // }
+    } catch (err: unknown) {
+      console.log(
+        err && typeof err === 'object' && 'response' in err && 
+        err.response && typeof err.response === 'object' && 'data' in err.response &&
+        err.response.data && typeof err.response.data === 'object' && 'message' in err.response.data
+          ? String(err.response.data.message)
+          : 'Google login initiation failed.'
+      );
+    } finally {
+      setLoading(false); // Note: This might not run if window.location.href takes over immediately
+    }
+  };
+
   const handleRouteProtection = () => {
     // Public routes that don't require authentication
     const publicRoutes = ['/', '/auth/login', '/auth/signup', '/auth/check-email', '/auth/verify-email-complete'];
     const isPublicRoute = publicRoutes.includes(pathname);
     const isAuthenticated = !!user;
-    
+
     console.log('handleRouteProtection isAuthenticated:', isAuthenticated);
     console.log('handleRouteProtection isPublicRoute:', isPublicRoute);
-    
+
     if (isAuthenticated && isPublicRoute) {
       // User is logged in but on a public route, redirect to dashboard
       router.push('/dashboard');
@@ -134,6 +170,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     login,
     logout,
     signup,
+    handleGoogleLogin
   };
 
   return (
