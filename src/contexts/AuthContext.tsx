@@ -59,24 +59,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       // This MUST be a URL on your Next.js frontend that can handle the OAuth callback.
       const redirectFrontendUrl = `${window.location.origin}/auth/google`; // Dynamically get your frontend origin
       console.log('redirectFrontendUrl', redirectFrontendUrl);
-      // const response = await apiClient.post('/auth/oauth/google-initiate', {
-      //   redirectTo: redirectFrontendUrl,
-      // });
+      const response = await apiClient.post('/auth/oauth/google-initiate', {
+        redirectTo: redirectFrontendUrl,
+      });
 
-      // const oauthRedirectUrl = response.data.oauth_redirect_url;
+      const oauthRedirectUrl = response.data.oauth_redirect_url;
 
-      // if (oauthRedirectUrl) {
-      //   // 2. Redirect the user's browser to the Google OAuth URL provided by your backend
-      //   // This is a full page redirect, as required by OAuth.
-      //   window.location.href = oauthRedirectUrl;
-      // } else {
-      //   console.log('Failed to get Google OAuth redirect URL from backend.');
-      // }
+      if (oauthRedirectUrl) {
+        // 2. Redirect the user's browser to the Google OAuth URL provided by your backend
+        // This is a full page redirect, as required by OAuth.
+        window.location.href = oauthRedirectUrl;
+      } else {
+        console.log('Failed to get Google OAuth redirect URL from backend.');
+      }
     } catch (err: unknown) {
       console.log(
-        err && typeof err === 'object' && 'response' in err && 
-        err.response && typeof err.response === 'object' && 'data' in err.response &&
-        err.response.data && typeof err.response.data === 'object' && 'message' in err.response.data
+        err && typeof err === 'object' && 'response' in err &&
+          err.response && typeof err.response === 'object' && 'data' in err.response &&
+          err.response.data && typeof err.response.data === 'object' && 'message' in err.response.data
           ? String(err.response.data.message)
           : 'Google login initiation failed.'
       );
