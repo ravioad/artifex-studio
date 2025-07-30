@@ -25,8 +25,8 @@ export default function AuthCallbackPage() {
             console.log('window.location.hash.substring(1)', window.location.hash.substring(1));
             const hash = window.location.hash.substring(1); // Remove the '#'
             const params = new URLSearchParams(hash);
-            const accessToken = params.get('access_token');
-            const refreshToken = params.get('refresh_token');
+            const access_token = params.get('access_token');
+            const refresh_token = params.get('refresh_token');
 
             // Clear the hash from the URL so it's not visible
             // This is important for a cleaner URL and security.
@@ -34,14 +34,14 @@ export default function AuthCallbackPage() {
             //     window.history.replaceState(null, '', window.location.pathname);
             // }
 
-            if (!accessToken || !refreshToken) {
+            if (!access_token || !refresh_token) {
                 setError('Login failed: Missing tokens from provider.');
                 setMessage('Redirecting to login page...');
                 logLogin({
                     message: 'On Google Callback Page2 (going to login)',
                     details: {
-                        'calling back accessToken': accessToken,
-                        'calling back refreshToken': refreshToken
+                        'calling back access_token': access_token,
+                        'calling back refresh_token': refresh_token
                     }
                 })
                 setTimeout(() => router.push('/auth/login'), 10000); // Redirect after a delay
@@ -54,15 +54,15 @@ export default function AuthCallbackPage() {
                 logLogin({
                     message: 'On Google Callback Page2 (Calling back to backend with tokens)',
                     details: {
-                        'calling back accessToken': accessToken,
-                        'calling back refreshToken': refreshToken
+                        'calling back access_token': access_token,
+                        'calling back refresh_token': refresh_token
                     }
                 })
-                console.log('calling back accessToken', accessToken);
-                console.log('calling back refreshToken', refreshToken);
+                console.log('calling back access_token', access_token);
+                console.log('calling back refresh_token', refresh_token);
                 await apiClient.post('/api/auth/google/callback', {
-                    accessToken,
-                    refreshToken,
+                    access_token,
+                    refresh_token,
                 });
 
                 // 3. Upon success, redirect to the dashboard
@@ -70,8 +70,8 @@ export default function AuthCallbackPage() {
                 logLogin({
                     message: 'On Google Callback Page2 (going to dashboard)',
                     details: {
-                        'calling back accessToken': accessToken,
-                        'calling back refreshToken': refreshToken
+                        'calling back access_token': access_token,
+                        'calling back refresh_token': refresh_token
                     }
                 })
                 setTimeout(() => router.push('/dashboard'), 10000);
@@ -89,8 +89,8 @@ export default function AuthCallbackPage() {
                 logLogin({
                     message: 'On Google Callback Page2 (going to login on error)',
                     details: {
-                        'calling back accessToken': accessToken,
-                        'calling back refreshToken': refreshToken
+                        'calling back access_token': access_token,
+                        'calling back refresh_token': refresh_token
                     }
                 })
                 setTimeout(() => router.push('/auth/login'), 10000); // Redirect after a delay
