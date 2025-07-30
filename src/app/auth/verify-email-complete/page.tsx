@@ -50,7 +50,6 @@ const VerifyEmailCompletePage: React.FC = () => {
       handleVerification();
     }, [router]);
 
-    // Show loading spinner while checking authentication
     if (authLoading) {
       return (
         <div className="min-h-screen flex items-center justify-center bg-background animate-fade-in">
@@ -73,9 +72,7 @@ const VerifyEmailCompletePage: React.FC = () => {
             </p>
           </div>
 
-          {/* Main Card */}
           <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl">
-            {/* Status Icon */}
             <div className="flex justify-center mb-6">
               {status === 'loading' && (
                 <div className="w-16 h-16 rounded-full bg-blue-500/20 border-2 border-blue-500 flex items-center justify-center">
@@ -98,7 +95,6 @@ const VerifyEmailCompletePage: React.FC = () => {
               )}
             </div>
 
-            {/* Status Message */}
             <div className="text-center space-y-4">
               {status === 'loading' && (
                 <div>

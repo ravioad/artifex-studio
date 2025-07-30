@@ -8,17 +8,175 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
   const { user, logout } = useAuth();
 
+  // Check if user is authorized (replace with your email)
+  const isAuthorized = user?.email === 'rvoad9@gmail.com'; // Replace with your actual email
+
+  // Show work in progress for unauthorized users
+  if (!isAuthorized) {
+    return (
+      <div className="min-h-screen bg-background">
+        {/* Top Navigation */}
+        <nav className="bg-background-card border-b border-border">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '4rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+                <Link href="/" className="text-heading-3 text-gradient-creative font-bold">
+                  Artifex Studio
+                </Link>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <div style={{ position: 'relative' }} onMouseEnter={(e) => {
+                  const dropdown = e.currentTarget.querySelector('[data-dropdown]') as HTMLElement;
+                  if (dropdown) {
+                    dropdown.style.opacity = '1';
+                    dropdown.style.visibility = 'visible';
+                  }
+                }} onMouseLeave={(e) => {
+                  const dropdown = e.currentTarget.querySelector('[data-dropdown]') as HTMLElement;
+                  if (dropdown) {
+                    dropdown.style.opacity = '0';
+                    dropdown.style.visibility = 'hidden';
+                  }
+                }}>
+                  <div style={{ 
+                    width: '40px', 
+                    height: '40px', 
+                    borderRadius: '50%', 
+                    background: 'linear-gradient(135deg, #0ea5e9, #a855f7)', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    cursor: 'pointer',
+                    border: '2px solid rgba(255, 255, 255, 0.1)',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+                  }}>
+                    <svg style={{ width: '20px', height: '20px', color: '#ffffff' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                  <div data-dropdown style={{ 
+                    position: 'absolute', 
+                    right: '0', 
+                    top: '100%', 
+                    marginTop: '0.5rem', 
+                    width: '200px', 
+                    backgroundColor: 'rgba(30, 41, 59, 0.95)', 
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)', 
+                    borderRadius: '12px', 
+                    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.4)', 
+                    opacity: '0', 
+                    visibility: 'hidden', 
+                    transition: 'all 0.2s ease',
+                    zIndex: '50'
+                  }}>
+                    <div style={{ padding: '0.5rem 0' }}>
+                      <div style={{ padding: '0.75rem 1rem', fontSize: '14px', color: '#94a3b8', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                        {user?.email}
+                      </div>
+                      <button
+                        onClick={logout}
+                        style={{ 
+                          width: '100%', 
+                          textAlign: 'left', 
+                          padding: '0.75rem 1rem', 
+                          fontSize: '14px', 
+                          color: '#f8fafc', 
+                          backgroundColor: 'transparent',
+                          border: 'none',
+                          cursor: 'pointer',
+                          transition: 'background-color 0.2s'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                      >
+                        Sign Out
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        {/* Work in Progress Content */}
+        <div className="w-full max-w-7sxl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="text-center">
+            <div className="mb-8">
+              <div className="w-24 h-24 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-6">
+                <svg className="w-12 h-12 text-text-inverse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                </svg>
+              </div>
+              <h1 className="text-4xl font-bold text-white mb-4">Work in Progress</h1>
+              <p className="text-xl text-slate-300 mb-8">
+                We're currently building something amazing for you!
+              </p>
+            </div>
+            
+            <div style={{ 
+              backgroundColor: 'rgba(255, 255, 255, 0.05)', 
+              backdropFilter: 'blur(20px)', 
+              border: '1px solid rgba(255, 255, 255, 0.1)', 
+              borderRadius: '16px', 
+              padding: '2rem', 
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)', 
+              maxWidth: '42rem', 
+              margin: '0 auto',
+              width: '100%'
+            }}>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#ffffff', marginBottom: '1rem' }}>Coming Soon</h2>
+              <p style={{ color: '#cbd5e1', marginBottom: '1.5rem', lineHeight: '1.6' }}>
+                Our AI-powered content creation studio is under development. 
+                You'll be the first to know when it's ready!
+              </p>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginTop: '2rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#3b82f6', boxShadow: '0 0 10px rgba(59, 130, 246, 0.5)' }}></div>
+                  <span style={{ color: '#e2e8f0', fontSize: '16px', fontWeight: '500' }}>AI-powered content generation</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#a855f7', boxShadow: '0 0 10px rgba(168, 85, 247, 0.5)' }}></div>
+                  <span style={{ color: '#e2e8f0', fontSize: '16px', fontWeight: '500' }}>Smart editing and optimization</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#10b981', boxShadow: '0 0 10px rgba(16, 185, 129, 0.5)' }}></div>
+                  <span style={{ color: '#e2e8f0', fontSize: '16px', fontWeight: '500' }}>Multi-platform publishing</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#f59e0b', boxShadow: '0 0 10px rgba(245, 158, 11, 0.5)' }}></div>
+                  <span style={{ color: '#e2e8f0', fontSize: '16px', fontWeight: '500' }}>Advanced analytics and insights</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8">
+              <button 
+                onClick={logout}
+                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium py-3 px-6 rounded-xl hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition-all duration-200"
+              >
+                Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       {/* Top Navigation */}
       <nav className="bg-background-card border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-8">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '4rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
               <Link href="/" className="text-heading-3 text-gradient-creative font-bold">
                 Artifex Studio
               </Link>
-              <div className="hidden md:flex items-center space-x-1">
+              <div className="hidden md:flex items-center" style={{ gap: '0.25rem' }}>
                 <button 
                   onClick={() => setActiveTab('overview')}
                   className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
@@ -61,7 +219,7 @@ export default function Dashboard() {
                 </button>
               </div>
             </div>
-            <div className="flex items-center space-x-4">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <button className="btn-ghost">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5z" />
@@ -193,22 +351,22 @@ export default function Dashboard() {
 
               <div className="card">
                 <h3 className="text-heading-3 mb-4">Recent Activity</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                     <div className="w-2 h-2 rounded-full bg-success-500"></div>
                     <div className="flex-1">
                       <p className="text-body-small">Blog post &quot;AI in Marketing&quot; published</p>
                       <p className="text-caption text-text-tertiary">2 hours ago</p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-3">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                     <div className="w-2 h-2 rounded-full bg-primary-500"></div>
                     <div className="flex-1">
                       <p className="text-body-small">New draft &quot;Content Strategy Guide&quot; created</p>
                       <p className="text-caption text-text-tertiary">1 day ago</p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-3">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                     <div className="w-2 h-2 rounded-full bg-warning-500"></div>
                     <div className="flex-1">
                       <p className="text-body-small">Social media post scheduled</p>
@@ -225,19 +383,19 @@ export default function Dashboard() {
                 <h3 className="text-heading-3">Recent Content</h3>
                 <button className="btn-ghost text-sm">View All</button>
               </div>
-              <div className="space-y-4">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {[
                   { title: "AI in Marketing: The Future is Here", status: "published", date: "2 hours ago", views: "156" },
                   { title: "Content Strategy Guide for 2024", status: "draft", date: "1 day ago", views: "0" },
                   { title: "10 Tips for Better Social Media Engagement", status: "published", date: "3 days ago", views: "89" },
                   { title: "How to Write Compelling Headlines", status: "published", date: "1 week ago", views: "234" }
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-background-secondary transition-colors">
+                  <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem', borderRadius: '0.5rem', border: '1px solid var(--border-primary)', transition: 'background-color 0.2s' }} className="hover:bg-background-secondary">
                     <div className="flex-1">
                       <h4 className="text-body font-medium">{item.title}</h4>
                       <p className="text-caption text-text-tertiary">{item.date} • {item.views} views</p>
                     </div>
-                    <div className="flex items-center space-x-3">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                       <span className={`badge ${item.status === 'published' ? 'badge-success' : 'badge-warning'}`}>
                         {item.status}
                       </span>
