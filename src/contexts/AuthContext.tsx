@@ -38,17 +38,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const checkAuthStatus = async () => {
     console.log('checkAuthStatus');
-    // try {
-    //   const response = await apiClient.get('/api/me');
-    //   console.log('Auth status check response:', response.data);
-    //   setUser(response.data);
-    // } catch (error) {
-    //   console.error('Auth status check error:', error);
-    //   setUser(null);
-    // } finally {
-    //   console.log('Auth status check finally');
-    //   setLoading(false);
-    // }
+    try {
+      const response = await apiClient.get('/api/me');
+      console.log('Auth status check response:', response.data);
+      setUser(response.data);
+    } catch (error) {
+      console.error('Auth status check error:', error);
+      setUser(null);
+    } finally {
+      console.log('Auth status check finally');
+      setLoading(false);
+    }
   };
 
   const handleGoogleLogin = async () => {
@@ -62,8 +62,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       logLogin({
         message: 'On Google Login Page (Trying to get redirect url from following url location)',
         details: {
-            "window.location.origin": window.location.origin,
-            "redirectFrontendUrl": redirectFrontendUrl,
+          "window.location.origin": window.location.origin,
+          "redirectFrontendUrl": redirectFrontendUrl,
         }
       })
       console.log('redirectFrontendUrl', redirectFrontendUrl);
@@ -82,9 +82,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     } catch (err: unknown) {
       console.log(
-        err && typeof err === 'object' && 'response' in err && 
-        err.response && typeof err.response === 'object' && 'data' in err.response &&
-        err.response.data && typeof err.response.data === 'object' && 'message' in err.response.data
+        err && typeof err === 'object' && 'response' in err &&
+          err.response && typeof err.response === 'object' && 'data' in err.response &&
+          err.response.data && typeof err.response.data === 'object' && 'message' in err.response.data
           ? String(err.response.data.message)
           : 'Google login initiation failed.'
       );
@@ -127,16 +127,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, [loading, user, pathname, router]);
 
   // Show loading spinner while authentication is being checked
-  // if (loading) {
-  //   return (
-  //     <div className="min-h-screen flex items-center justify-center bg-background animate-fade-in">
-  //       <div className="text-center">
-  //         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
-  //         <p className="text-text-secondary animate-pulse">Loading...</p>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background animate-fade-in">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
+          <p className="text-text-secondary animate-pulse">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   const login = async (email: string, password: string) => {
     try {
