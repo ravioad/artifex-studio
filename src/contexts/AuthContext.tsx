@@ -59,7 +59,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       // This MUST be a URL on your Next.js frontend that can handle the OAuth callback.
       const redirectFrontendUrl = `${window.location.origin}/auth/google`; // Dynamically get your frontend origin
       console.log('redirectFrontendUrl', redirectFrontendUrl);
-      const response = await apiClient.post('/auth/oauth/google-initiate', {
+      const response = await apiClient.post('/api/auth/oauth/google-initiate', {
         redirectTo: redirectFrontendUrl,
       });
 
@@ -74,9 +74,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     } catch (err: unknown) {
       console.log(
-        err && typeof err === 'object' && 'response' in err &&
-          err.response && typeof err.response === 'object' && 'data' in err.response &&
-          err.response.data && typeof err.response.data === 'object' && 'message' in err.response.data
+        err && typeof err === 'object' && 'response' in err && 
+        err.response && typeof err.response === 'object' && 'data' in err.response &&
+        err.response.data && typeof err.response.data === 'object' && 'message' in err.response.data
           ? String(err.response.data.message)
           : 'Google login initiation failed.'
       );
