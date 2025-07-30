@@ -30,9 +30,9 @@ export default function AuthCallbackPage() {
 
             // Clear the hash from the URL so it's not visible
             // This is important for a cleaner URL and security.
-            if (window.history.replaceState) {
-                window.history.replaceState(null, '', window.location.pathname);
-            }
+            // if (window.history.replaceState) {
+            //     window.history.replaceState(null, '', window.location.pathname);
+            // }
 
             if (!accessToken || !refreshToken) {
                 setError('Login failed: Missing tokens from provider.');
