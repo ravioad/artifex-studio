@@ -30,9 +30,9 @@ export default function AuthCallbackPage() {
 
             // Clear the hash from the URL so it's not visible
             // This is important for a cleaner URL and security.
-            // if (window.history.replaceState) {
-            //     window.history.replaceState(null, '', window.location.pathname);
-            // }
+            if (window.history.replaceState) {
+                window.history.replaceState(null, '', window.location.pathname);
+            }
 
             if (!access_token || !refresh_token) {
                 setError('Login failed: Missing tokens from provider.');
@@ -44,7 +44,7 @@ export default function AuthCallbackPage() {
                         'calling back refresh_token': refresh_token
                     }
                 })
-                setTimeout(() => router.push('/auth/login'), 10000); // Redirect after a delay
+                setTimeout(() => router.push('/auth/login'), 3000); // Redirect after a delay
                 return;
             }
 
@@ -74,8 +74,8 @@ export default function AuthCallbackPage() {
                         'calling back refresh_token': refresh_token
                     }
                 })
-                setTimeout(() => router.push('/dashboard'), 10000);
-                // router.push('/dashboard');
+                // setTimeout(() => router.push('/dashboard'), 10000);
+                router.push('/dashboard');
             } catch (err: unknown) {
                 console.error('OAuth Callback Error:', err);
                 setError(
@@ -93,7 +93,7 @@ export default function AuthCallbackPage() {
                         'calling back refresh_token': refresh_token
                     }
                 })
-                setTimeout(() => router.push('/auth/login'), 10000); // Redirect after a delay
+                setTimeout(() => router.push('/auth/login'), 3000); // Redirect after a delay
             }
         };
 
