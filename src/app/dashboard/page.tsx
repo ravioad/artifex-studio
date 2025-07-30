@@ -111,7 +111,7 @@ export default function Dashboard() {
               </div>
               <h1 className="text-4xl font-bold text-white mb-4">Work in Progress</h1>
               <p className="text-xl text-slate-300 mb-8">
-                We're currently building something amazing for you!
+                We&apos;re currently building something amazing for you!
               </p>
             </div>
             
@@ -129,7 +129,7 @@ export default function Dashboard() {
               <h2 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#ffffff', marginBottom: '1rem' }}>Coming Soon</h2>
               <p style={{ color: '#cbd5e1', marginBottom: '1.5rem', lineHeight: '1.6' }}>
                 Our AI-powered content creation studio is under development. 
-                You'll be the first to know when it's ready!
+                You&apos;ll be the first to know when it&apos;s ready!
               </p>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginTop: '2rem' }}>
