@@ -12,6 +12,9 @@ export default function AuthCallbackPage() {
     useEffect(() => {
       const handleOAuthCallback = async () => {
         // 1. Extract tokens from URL hash
+        console.log('handleOAuthCallback');
+        console.log('window.location.hash', window.location.hash);
+        console.log('window.location.hash.substring(1)', window.location.hash.substring(1));
         const hash = window.location.hash.substring(1); // Remove the '#'
         const params = new URLSearchParams(hash);
         const accessToken = params.get('access_token');
