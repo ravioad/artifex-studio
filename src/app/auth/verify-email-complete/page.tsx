@@ -12,7 +12,7 @@ const VerifyEmailCompletePage: React.FC = () => {
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [message, setMessage] = useState<string>('Verifying your email...');
   const router = useRouter();
-  const { loading: authLoading } = useAuth('verify-email-complete');
+  const { loading: authLoading, refreshAuth } = useAuth('verify-email-complete');
   const hasProcessedVerification = useRef(false);
 
   useEffect(() => {
@@ -34,7 +34,6 @@ const VerifyEmailCompletePage: React.FC = () => {
             accessToken,
             refreshToken,
           }, 'Verification completion started');
-          // Send tokens to your backend to set HTTP-only cookies
           const response = await apiClient.post('/api/auth/verify-email-complete', {
             accessToken,
             refreshToken,
@@ -44,11 +43,12 @@ const VerifyEmailCompletePage: React.FC = () => {
           }, 'Verification completion successful');
           setMessage(response.data.message || 'Email verification successful!');
           setStatus('success');
-          // Clear the URL hash for cleaner UX
           window.history.replaceState({}, document.title, window.location.pathname);
-          // Redirect to dashboard after a short delay
+          
+          await refreshAuth();
+          
           setTimeout(() => {
-            router.push('/dashboard'); // Or your main app page
+            router.push('/dashboard');
           }, 2000);
         } catch (err: unknown) {
           const error = err as { response?: { data?: { error?: string } }; message?: string };

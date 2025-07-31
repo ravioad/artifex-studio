@@ -16,6 +16,7 @@ interface AuthContextType {
   handleGoogleLogin: () => Promise<void>;
   forgotPassword: (email: string) => Promise<void>;
   resetPassword: (accessToken: string, refreshToken: string, newPassword: string) => Promise<void>;
+  refreshAuth: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -234,6 +235,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const refreshAuth = async () => {
+    await checkAuthStatus();
+  };
+
   const isAuthenticated = !!user;
 
   const value: AuthContextType = {
@@ -245,7 +250,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     signup,
     handleGoogleLogin,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    refreshAuth
   };
 
   return (
