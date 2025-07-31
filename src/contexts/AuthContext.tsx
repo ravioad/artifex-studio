@@ -15,7 +15,7 @@ interface AuthContextType {
   signup: (email: string, password: string, name: string) => Promise<void>;
   handleGoogleLogin: () => Promise<void>;
   forgotPassword: (email: string) => Promise<void>;
-  resetPassword: (accessToken: string, refreshToken: string, password: string) => Promise<void>;
+  resetPassword: (accessToken: string, refreshToken: string, newPassword: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -216,12 +216,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  const resetPassword = async (accessToken: string, refreshToken: string, password: string) => {
+  const resetPassword = async (accessToken: string, refreshToken: string, newPassword: string) => {
     try {
       const response = await apiClient.post('/api/auth/reset-password/confirm', {
         accessToken,
         refreshToken,
-        password
+        newPassword
       });
       return response.data;
     } catch (error) {
