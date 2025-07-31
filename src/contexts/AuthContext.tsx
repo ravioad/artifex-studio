@@ -4,7 +4,7 @@ import React, { createContext, useContext, useEffect, useState, ReactNode } from
 import { useRouter, usePathname } from 'next/navigation';
 import apiClient from '@/utils/api';
 import { User } from '@/models/User';
-import { logLogin, logPageView } from '@/utils/logger';
+import { logErrorFrontend, logLogin, logPageView } from '@/utils/logger';
 
 interface AuthContextType {
   user: User | null;
@@ -20,10 +20,15 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const useAuth = () => {
+export const useAuth = (screenName?: string) => {
   const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
+  }
+  if (screenName) {
+    logErrorFrontend({
+      "screenName": screenName,
+    }, 'useAuth');
   }
   return context;
 };

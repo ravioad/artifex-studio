@@ -7,7 +7,7 @@ import PageWrapper from '@/components/PageWrapper';
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuth('dashboard');
 
   // Check if user is authorized (replace with your email)
   const isAuthorized = user?.email === 'rvoad9@gmail.com'; // Replace with your actual email

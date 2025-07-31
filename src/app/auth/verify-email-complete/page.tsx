@@ -12,13 +12,12 @@ const VerifyEmailCompletePage: React.FC = () => {
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [message, setMessage] = useState<string>('Verifying your email...');
   const router = useRouter();
-  const { loading: authLoading } = useAuth();
+  const { loading: authLoading } = useAuth('verify-email-complete');
 
   useEffect(() => {
     const handleVerification = async () => {
-      // Extract tokens from URL hash
       const hash = window.location.hash;
-      const params = new URLSearchParams(hash.substring(1)); // Remove '#'
+      const params = new URLSearchParams(hash.substring(1));
       const accessToken = params.get('access_token');
       const refreshToken = params.get('refresh_token');
 
