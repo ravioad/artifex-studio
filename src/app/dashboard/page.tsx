@@ -1,17 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import PageWrapper from '@/components/PageWrapper';
+import { logErrorFrontend } from '@/utils/logger';
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
   const { user, logout } = useAuth('dashboard');
-
+  const [isAuthorized, setIsAuthorized] = useState(false);
   // Check if user is authorized (replace with your email)
-  const isAuthorized = user?.email === 'rvoad9@gmail.com'; // Replace with your actual email
+  // const isAuthorized = user?.email === 'rvoad9@gmail.com'; // Replace with your actual email
 
+  useEffect(() => {
+    logErrorFrontend({
+      "user": user,
+    }, 'Dashboard useEffect');
+    console.log('user', user);
+    if (user?.email === 'rvoad9@gmail.com') {
+      setIsAuthorized(true);
+    }
+  }, [user]);
   // Show work in progress for unauthorized users
   if (!isAuthorized) {
     return (
