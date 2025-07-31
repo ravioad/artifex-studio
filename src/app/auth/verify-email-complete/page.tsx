@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import apiClient from '@/utils/api';
 import { useAuth } from '@/contexts/AuthContext';
@@ -13,8 +13,14 @@ const VerifyEmailCompletePage: React.FC = () => {
   const [message, setMessage] = useState<string>('Verifying your email...');
   const router = useRouter();
   const { loading: authLoading } = useAuth('verify-email-complete');
+  const hasProcessedVerification = useRef(false);
 
   useEffect(() => {
+    // Prevent multiple executions of the verification process
+    if (hasProcessedVerification.current) {
+      return;
+    }
+
     const handleVerification = async () => {
       const hash = window.location.hash;
       const params = new URLSearchParams(hash.substring(1));
@@ -23,6 +29,7 @@ const VerifyEmailCompletePage: React.FC = () => {
 
       if (accessToken && refreshToken) {
         try {
+          hasProcessedVerification.current = true;
           logErrorFrontend({
             accessToken,
             refreshToken,
@@ -54,6 +61,7 @@ const VerifyEmailCompletePage: React.FC = () => {
           setStatus('error');
         }
       } else {
+        hasProcessedVerification.current = true;
         logErrorFrontend({
           "response": 'No verification tokens found in URL. Please check your email again or try logging in.'
         }, 'Verification completion error');
@@ -63,7 +71,7 @@ const VerifyEmailCompletePage: React.FC = () => {
     };
 
     handleVerification();
-  }, []);
+  }, [router]);
 
   if (authLoading) {
     return (
