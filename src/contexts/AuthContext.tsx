@@ -125,6 +125,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         console.log('Failed to get Google OAuth redirect URL from backend.');
       }
     } catch (err: unknown) {
+      setLoading(false); 
       console.log(
         err && typeof err === 'object' && 'response' in err &&
           err.response && typeof err.response === 'object' && 'data' in err.response &&
@@ -132,9 +133,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           ? String(err.response.data.message)
           : 'Google login initiation failed.'
       );
-    } finally {
-      setLoading(false); // Note: This might not run if window.location.href takes over immediately
-    }
+    } 
+    // finally {
+    //   setLoading(false); // Note: This might not run if window.location.href takes over immediately
+    // }
   };
 
   const handleRouteProtection = () => {
