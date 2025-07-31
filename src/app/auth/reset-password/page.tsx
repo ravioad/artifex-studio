@@ -21,9 +21,15 @@ export default function ResetPassword() {
 
     useEffect(() => {
         // Supabase provides both access_token and refresh_token in URL parameters
-        const accessTokenParam = searchParams.get('access_token');
-        const refreshTokenParam = searchParams.get('refresh_token');
-
+        // const accessTokenParam = searchParams.get('access_token');
+        // const refreshTokenParam = searchParams.get('refresh_token');
+        const hash = window.location.hash.substring(1); // Remove the '#'
+        console.log('hash', hash);
+        const params = new URLSearchParams(hash);
+        const accessTokenParam = params.get('access_token');
+        const refreshTokenParam = params.get('refresh_token');
+        console.log('accessTokenParam', accessTokenParam);
+        console.log('refreshTokenParam', refreshTokenParam);    
         setAccessToken(accessTokenParam);
         setRefreshToken(refreshTokenParam);
 

@@ -63,7 +63,6 @@ export default function ForgotPassword() {
                         Enter your email address and we&apos;ll send you a link to reset your password
                     </p>
                 </motion.div>
-&apos;
                                 {/* Main Card */}
                 <motion.div 
                     className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl"
