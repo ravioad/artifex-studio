@@ -4,11 +4,14 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import apiClient from '@/utils/api';
 import { logLogin } from '@/utils/logger';
+import { useAuth } from '@/contexts/AuthContext';
+import PageWrapper from '@/components/PageWrapper';
 
 export default function AuthCallbackPage() {
     const [message, setMessage] = useState('Processing your login...');
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
+    const { loading: authLoading, refreshAuth } = useAuth('google');
 
     useEffect(() => {
         const handleOAuthCallback = async () => {
@@ -19,10 +22,6 @@ export default function AuthCallbackPage() {
                     "window.location.hash.substring(1)": window.location.hash.substring(1),
                 }
             })
-            // 1. Extract tokens from URL hash
-            console.log('handleOAuthCallback');
-            console.log('window.location.hash', window.location.hash);
-            console.log('window.location.hash.substring(1)', window.location.hash.substring(1));
             const hash = window.location.hash.substring(1); // Remove the '#'
             const params = new URLSearchParams(hash);
             const access_token = params.get('access_token');
@@ -44,13 +43,11 @@ export default function AuthCallbackPage() {
                         'calling back refresh_token': refresh_token
                     }
                 })
-                setTimeout(() => router.push('/auth/login'), 3000); // Redirect after a delay
+                setTimeout(() => router.push('/auth/login'), 3000);
                 return;
             }
 
             try {
-                // 2. Send tokens to your Express.js backend to finalize the session
-                // Your backend will set HTTP-only cookies.
                 logLogin({
                     message: 'On Google Callback Page2 (Calling back to backend with tokens)',
                     details: {
@@ -65,7 +62,6 @@ export default function AuthCallbackPage() {
                     refresh_token,
                 });
 
-                // 3. Upon success, redirect to the dashboard
                 setMessage('Login successful! Redirecting...');
                 logLogin({
                     message: 'On Google Callback Page2 (going to dashboard)',
@@ -74,8 +70,12 @@ export default function AuthCallbackPage() {
                         'calling back refresh_token': refresh_token
                     }
                 })
-                // setTimeout(() => router.push('/dashboard'), 10000);
-                router.push('/dashboard');
+
+                await refreshAuth();
+
+                setTimeout(() => {
+                    router.push('/dashboard');
+                }, 2000);
             } catch (err: unknown) {
                 console.error('OAuth Callback Error:', err);
                 setError(
@@ -93,58 +93,72 @@ export default function AuthCallbackPage() {
                         'calling back refresh_token': refresh_token
                     }
                 })
-                setTimeout(() => router.push('/auth/login'), 3000); // Redirect after a delay
+                setTimeout(() => router.push('/auth/login'), 3000);
             }
         };
 
         handleOAuthCallback();
-    }, [router]); // Re-run effect if router object changes (unlikely, but good practice)
+    }, [router]);
+
+    if (authLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-background animate-fade-in">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
+                    <p className="text-text-secondary animate-pulse">Loading...</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
-        <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: '100vh',
-            backgroundColor: '#1a1a2e', // Example dark background
-            color: '#ffffff', // Example light text
-            fontFamily: 'Arial, sans-serif'
-        }}>
+        <PageWrapper>
+
             <div style={{
-                backgroundColor: '#2e2e42',
-                padding: '40px',
-                borderRadius: '10px',
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
-                textAlign: 'center'
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                minHeight: '100vh',
+                backgroundColor: '#1a1a2e', // Example dark background
+                color: '#ffffff', // Example light text
+                fontFamily: 'Arial, sans-serif'
             }}>
-                {error ? (
-                    <>
-                        <h2 style={{ color: '#ff6b6b' }}>Error!</h2>
-                        <p>{error}</p>
-                    </>
-                ) : (
-                    <>
-                        <h2 style={{ color: '#6bff6b' }}>{message}</h2>
-                        {/* Simple loading spinner or icon */}
-                        <div style={{
-                            border: '4px solid rgba(255, 255, 255, 0.3)',
-                            borderTop: '4px solid #6bff6b',
-                            borderRadius: '50%',
-                            width: '30px',
-                            height: '30px',
-                            animation: 'spin 1s linear infinite',
-                            margin: '20px auto'
-                        }}></div>
-                        <style jsx>{`
+                <div style={{
+                    backgroundColor: '#2e2e42',
+                    padding: '40px',
+                    borderRadius: '10px',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
+                    textAlign: 'center'
+                }}>
+                    {error ? (
+                        <>
+                            <h2 style={{ color: '#ff6b6b' }}>Error!</h2>
+                            <p>{error}</p>
+                        </>
+                    ) : (
+                        <>
+                            <h2 style={{ color: '#6bff6b' }}>{message}</h2>
+                            {/* Simple loading spinner or icon */}
+                            <div style={{
+                                border: '4px solid rgba(255, 255, 255, 0.3)',
+                                borderTop: '4px solid #6bff6b',
+                                borderRadius: '50%',
+                                width: '30px',
+                                height: '30px',
+                                animation: 'spin 1s linear infinite',
+                                margin: '20px auto'
+                            }}></div>
+                            <style jsx>{`
                 @keyframes spin {
                   0% { transform: rotate(0deg); }
                   100% { transform: rotate(360deg); }
                 }
               `}</style>
-                    </>
-                )}
+                        </>
+                    )}
+                </div>
             </div>
-        </div>
+        </PageWrapper>
     );
 }

@@ -13,14 +13,8 @@ const VerifyEmailCompletePage: React.FC = () => {
   const [message, setMessage] = useState<string>('Verifying your email...');
   const router = useRouter();
   const { loading: authLoading, refreshAuth } = useAuth('verify-email-complete');
-  const hasProcessedVerification = useRef(false);
 
   useEffect(() => {
-    // Prevent multiple executions of the verification process
-    if (hasProcessedVerification.current) {
-      return;
-    }
-
     const handleVerification = async () => {
       const hash = window.location.hash;
       const params = new URLSearchParams(hash.substring(1));
@@ -29,18 +23,10 @@ const VerifyEmailCompletePage: React.FC = () => {
 
       if (accessToken && refreshToken) {
         try {
-          hasProcessedVerification.current = true;
-          logErrorFrontend({
-            accessToken,
-            refreshToken,
-          }, 'Verification completion started');
           const response = await apiClient.post('/api/auth/verify-email-complete', {
             accessToken,
             refreshToken,
           });
-          logErrorFrontend({
-            "response": response.data.message || 'Email verification successful!'
-          }, 'Verification completion successful');
           setMessage(response.data.message || 'Email verification successful!');
           setStatus('success');
           window.history.replaceState({}, document.title, window.location.pathname);
@@ -53,18 +39,10 @@ const VerifyEmailCompletePage: React.FC = () => {
         } catch (err: unknown) {
           const error = err as { response?: { data?: { error?: string } }; message?: string };
           console.error('Verification completion error:', error.response?.data || error.message);
-
-          logErrorFrontend({
-            "response": error.response?.data || error.message || 'Failed to complete email verification.'
-          }, 'Verification completion catch error');
           setMessage(error.response?.data?.error || 'Failed to complete email verification.');
           setStatus('error');
         }
       } else {
-        hasProcessedVerification.current = true;
-        logErrorFrontend({
-          "response": 'No verification tokens found in URL. Please check your email again or try logging in.'
-        }, 'Verification completion error');
         setMessage('No verification tokens found in URL. Please check your email again or try logging in.');
         setStatus('error');
       }
