@@ -10,7 +10,7 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string, rememberMe?: boolean) => Promise<void>;
   logout: () => Promise<void>;
   signup: (email: string, password: string, name: string) => Promise<void>;
   handleGoogleLogin: () => Promise<void>;
@@ -184,9 +184,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     );
   }
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string, rememberMe?: boolean) => {
     try {
-      const response = await apiClient.post('/api/auth/login', { email, password });
+      const response = await apiClient.post('/api/auth/login', { email, password, rememberMe });
       setUser(response.data.user);
     } catch (error) {
       throw error;

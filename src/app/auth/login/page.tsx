@@ -36,8 +36,7 @@ export default function Login() {
         setError('');
 
         try {
-            await login(formData.email, formData.password);
-            // Login successful - user will be redirected to dashboard by AuthContext
+            await login(formData.email, formData.password, formData.rememberMe);
         } catch (err: unknown) {
             const error = err as { response?: { data?: { error?: string } }; message?: string };
             setError(error.response?.data?.error || error.message || 'Login failed. Please try again.');
