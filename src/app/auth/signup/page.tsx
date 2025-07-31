@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import PageWrapper from '@/components/PageWrapper';
 
 export default function Signup() {
   const { user, loading, signup } = useAuth();
@@ -84,9 +85,10 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 flex items-center justify-center">
+    <PageWrapper>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 flex items-center justify-center">
 
-      <div className="w-full max-w-lg">
+        <div className="w-full max-w-lg">
         {/* Header */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-block text-3xl text-gradient-creative font-bold mb-6">
@@ -102,7 +104,7 @@ export default function Signup() {
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl">
           <form className="space-y-6" onSubmit={handleSubmit}>
             {/* Full Name Field */}
-            <div className="space-y-2">
+            <div className="space-y-3">
               <label htmlFor="fullName" className="text-sm font-medium text-white">
                 Full name
               </label>
@@ -112,7 +114,7 @@ export default function Signup() {
                 type="text"
                 autoComplete="name"
                 required
-                className={`w-full bg-white/10 border ${errors.fullName ? 'border-red-500' : 'border-white/20'} rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
+                className={`w-full bg-white/10 border ${errors.fullName ? 'border-red-500' : 'border-white/20'} rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
                 placeholder="John Doe"
                 value={formData.fullName}
                 onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
@@ -123,7 +125,7 @@ export default function Signup() {
             </div>
 
             {/* Email Field */}
-            <div className="space-y-2">
+            <div className="space-y-3">
               <label htmlFor="email" className="text-sm font-medium text-white">
                 Email address
               </label>
@@ -133,7 +135,7 @@ export default function Signup() {
                 type="email"
                 autoComplete="email"
                 required
-                className={`w-full bg-white/10 border ${errors.email ? 'border-red-500' : 'border-white/20'} rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
+                className={`w-full bg-white/10 border ${errors.email ? 'border-red-500' : 'border-white/20'} rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
                 placeholder="john@example.com"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -145,7 +147,7 @@ export default function Signup() {
 
             {/* Password Fields */}
             <div className="space-y-4">
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <label htmlFor="password" className="text-sm font-medium text-white">
                   Password
                 </label>
@@ -155,7 +157,7 @@ export default function Signup() {
                   type="password"
                   autoComplete="new-password"
                   required
-                  className={`w-full bg-white/10 border ${errors.password ? 'border-red-500' : 'border-white/20'} rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
+                  className={`w-full bg-white/10 border ${errors.password ? 'border-red-500' : 'border-white/20'} rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
                   placeholder="Create a strong password"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
@@ -165,7 +167,7 @@ export default function Signup() {
                 )}
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <label htmlFor="confirmPassword" className="text-sm font-medium text-white">
                   Confirm password
                 </label>
@@ -175,7 +177,7 @@ export default function Signup() {
                   type="password"
                   autoComplete="new-password"
                   required
-                  className={`w-full bg-white/10 border ${errors.confirmPassword ? 'border-red-500' : 'border-white/20'} rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
+                  className={`w-full bg-white/10 border ${errors.confirmPassword ? 'border-red-500' : 'border-white/20'} rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
                   placeholder="Confirm your password"
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
@@ -322,5 +324,6 @@ export default function Signup() {
         </div>
       </div>
     </div>
+    </PageWrapper>
   );
 } 

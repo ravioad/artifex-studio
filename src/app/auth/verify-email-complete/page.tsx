@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import apiClient from '@/utils/api';
 import { useAuth } from '@/contexts/AuthContext';
+import PageWrapper from '@/components/PageWrapper';
 
 
 const VerifyEmailCompletePage: React.FC = () => {
@@ -62,8 +63,9 @@ const VerifyEmailCompletePage: React.FC = () => {
     }
   
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 flex items-center justify-center">
-        <div className="w-full max-w-lg">
+      <PageWrapper>
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 flex items-center justify-center">
+          <div className="w-full max-w-lg">
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-white mb-3">Email Verification</h1>
@@ -153,6 +155,7 @@ const VerifyEmailCompletePage: React.FC = () => {
           </div>
         </div>
       </div>
+      </PageWrapper>
     );
   };
   

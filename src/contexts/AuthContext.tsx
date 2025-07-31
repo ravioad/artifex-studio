@@ -14,6 +14,8 @@ interface AuthContextType {
   logout: () => Promise<void>;
   signup: (email: string, password: string, name: string) => Promise<void>;
   handleGoogleLogin: () => Promise<void>;
+  forgotPassword: (email: string) => Promise<void>;
+  resetPassword: (accessToken: string, refreshToken: string, password: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -38,12 +40,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const checkAuthStatus = async () => {
     console.log('checkAuthStatus');
-  
+
     // Get full URL
-    const fullUrl = typeof window !== 'undefined' 
+    const fullUrl = typeof window !== 'undefined'
       ? `${window.location.origin}${pathname}${window.location.search}${window.location.hash}`
       : '';
-      
+
     // Or simply use window.location.href for the complete URL
     const completeUrl = typeof window !== 'undefined' ? window.location.href : '';
 
@@ -54,7 +56,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         "completeUrl": completeUrl,
       }
     })
-  
+
     try {
       logPageView({
         message: 'On Auth Provider (Initializing Auth Check)',
@@ -131,7 +133,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const handleRouteProtection = () => {
     // Public routes that don't require authentication
-    const publicRoutes = ['/', '/auth/login', '/auth/signup', '/auth/check-email', '/auth/verify-email-complete'];
+    const publicRoutes = ['/', '/auth/login', '/auth/signup', '/auth/check-email', '/auth/verify-email-complete', '/auth/forgot-password', '/auth/reset-password'];
     const isPublicRoute = publicRoutes.includes(pathname);
     const isAuthenticated = !!user;
 
@@ -205,6 +207,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const forgotPassword = async (email: string) => {
+    try {
+      const response = await apiClient.post('/api/auth/reset-password/request', { email });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const resetPassword = async (accessToken: string, refreshToken: string, password: string) => {
+    try {
+      const response = await apiClient.post('/api/auth/reset-password/confirm', {
+        accessToken,
+        refreshToken,
+        password
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const isAuthenticated = !!user;
 
   const value: AuthContextType = {
@@ -214,7 +238,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     login,
     logout,
     signup,
-    handleGoogleLogin
+    handleGoogleLogin,
+    forgotPassword,
+    resetPassword
   };
 
   return (

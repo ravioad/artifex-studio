@@ -319,6 +319,32 @@
 
 /* ===== CUSTOM CSS CLASSES ===== */
 
+/* Background Classes */
+.bg-background {
+  background-color: var(--background-primary) !important;
+}
+
+.bg-background-secondary {
+  background-color: var(--background-secondary) !important;
+}
+
+.bg-background-tertiary {
+  background-color: var(--background-tertiary) !important;
+}
+
+.bg-background-card {
+  background-color: var(--background-card) !important;
+}
+
+/* Border Classes */
+.border-border {
+  border-color: var(--border-primary) !important;
+}
+
+.border-border-secondary {
+  border-color: var(--border-secondary) !important;
+}
+
 /* Gradient Text Classes - High Specificity */
 h1.text-gradient-creative,
 .text-gradient-creative {

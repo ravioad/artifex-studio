@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
+import PageWrapper from '@/components/PageWrapper';
 
 const CheckEmailPage: React.FC = () => {
   const { user, loading } = useAuth();
@@ -32,8 +33,9 @@ const CheckEmailPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: 'var(--background-primary)' }}>
-      <div className="w-full max-w-lg mx-auto p-4">
+    <PageWrapper>
+      <div className="min-h-screen" style={{ background: 'var(--background-primary)' }}>
+        <div className="w-full max-w-lg mx-auto p-4">
         {/* Header */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-block text-3xl text-gradient-creative font-bold mb-6">
@@ -92,6 +94,7 @@ const CheckEmailPage: React.FC = () => {
         </div>
       </div>
     </div>
+    </PageWrapper>
   );
 };
 
