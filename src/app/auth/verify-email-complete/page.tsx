@@ -41,9 +41,9 @@ const VerifyEmailCompletePage: React.FC = () => {
           // Clear the URL hash for cleaner UX
           window.history.replaceState({}, document.title, window.location.pathname);
           // Redirect to dashboard after a short delay
-          // setTimeout(() => {
-          //   router.push('/dashboard'); // Or your main app page
-          // }, 2000);
+          setTimeout(() => {
+            router.push('/dashboard'); // Or your main app page
+          }, 2000);
         } catch (err: unknown) {
           const error = err as { response?: { data?: { error?: string } }; message?: string };
           console.error('Verification completion error:', error.response?.data || error.message);
@@ -64,7 +64,7 @@ const VerifyEmailCompletePage: React.FC = () => {
     };
 
     handleVerification();
-  }, [router]);
+  }, []);
 
   if (authLoading) {
     return (
