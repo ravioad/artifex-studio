@@ -32,10 +32,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AuthProvider>
-          <NavigationTracker screenName="root-layout" />
+          {/* <NavigationTracker screenName="root-layout" /> */}
           {children}
           <Analytics />
-          <NavigationDebugger />
+          {/* <NavigationDebugger /> */}
         </AuthProvider>
       </body>
     </html>
