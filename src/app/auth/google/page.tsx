@@ -3,9 +3,10 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import apiClient from '@/utils/api';
-import { logLogin } from '@/utils/logger';
+import { logLogin, navigationTracker } from '@/utils/logger';
 import { useAuth } from '@/contexts/AuthContext';
 import PageWrapper from '@/components/PageWrapper';
+import NavigationTracker from '@/components/NavigationTracker';
 
 export default function AuthCallbackPage() {
     const [message, setMessage] = useState('Processing your login...');
@@ -73,9 +74,20 @@ export default function AuthCallbackPage() {
 
                 await refreshAuth();
 
-                setTimeout(() => {
-                    router.push('/dashboard');
-                }, 2000);
+                // Track the successful OAuth completion
+                navigationTracker.trackNavigation(
+                    '/dashboard',
+                    'authenticated',
+                    'redirect',
+                    {
+                        fromPath: '/auth/google',
+                        redirectReason: 'google_oauth_success',
+                        oauthProvider: 'google'
+                    }
+                );
+
+                // Immediate redirect to prevent showing landing page
+                router.push('/dashboard');
             } catch (err: unknown) {
                 console.error('OAuth Callback Error:', err);
                 setError(
@@ -113,6 +125,7 @@ export default function AuthCallbackPage() {
 
     return (
         <PageWrapper>
+            <NavigationTracker screenName="google-oauth-callback" />
 
             <div style={{
                 display: 'flex',

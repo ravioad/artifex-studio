@@ -4,7 +4,7 @@ import React, { createContext, useContext, useEffect, useState, ReactNode } from
 import { useRouter, usePathname } from 'next/navigation';
 import apiClient from '@/utils/api';
 import { User } from '@/models/User';
-import { logErrorFrontend, logLogin, logPageView } from '@/utils/logger';
+import { logErrorFrontend, logLogin, navigationTracker } from '@/utils/logger';
 
 interface AuthContextType {
   user: User | null;
@@ -55,41 +55,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // Or simply use window.location.href for the complete URL
     const completeUrl = typeof window !== 'undefined' ? window.location.href : '';
 
-    logPageView({
-      message: 'On Auth Provider (Checking auth status)',
-      details: {
-        "fullUrl": fullUrl,
-        "completeUrl": completeUrl,
-      }
-    })
-
     try {
-      logPageView({
-        message: 'On Auth Provider (Initializing Auth Check)',
-        details: {
-          "Hi": "Hi!!!",
-        }
-      })
       const response = await apiClient.get('/api/me');
       console.log('Auth status check response:', response.data);
       setUser(response.data);
     } catch (error) {
-
-      logPageView({
-        message: 'On Auth Provider (Auth Check Error)',
-        details: {
-          "error": error,
-        }
-      })
       console.error('Auth status check error:', error);
       setUser(null);
     } finally {
-      logPageView({
-        message: 'On Auth Provider (Auth Check Finally)',
-        details: {
-          "Hi": "Hi Finally!!!",
-        }
-      })
       console.log('Auth status check finally');
       setLoading(false);
     }
@@ -141,21 +114,60 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const handleRouteProtection = () => {
     // Public routes that don't require authentication
-    const publicRoutes = ['/', '/auth/login', '/auth/signup', '/auth/check-email', '/auth/verify-email-complete', '/auth/forgot-password', '/auth/reset-password'];
+    const publicRoutes = ['/', '/auth/login', '/auth/signup', '/auth/check-email', '/auth/verify-email-complete', '/auth/forgot-password', '/auth/reset-password', '/auth/google'];
     const isPublicRoute = publicRoutes.includes(pathname);
     const isAuthenticated = !!user;
 
     console.log('handleRouteProtection isAuthenticated:', isAuthenticated);
     console.log('handleRouteProtection isPublicRoute:', isPublicRoute);
 
-    if (isAuthenticated && isPublicRoute) {
-      // User is logged in but on a public route, redirect to dashboard
+    // Track the route protection decision
+    navigationTracker.trackNavigation(
+      pathname,
+      isAuthenticated ? 'authenticated' : 'unauthenticated',
+      'auth_change',
+      {
+        isPublicRoute,
+        willRedirect: false,
+        redirectReason: null
+      }
+    );
+
+    if (isAuthenticated && isPublicRoute && pathname !== '/auth/google') {
+      // User is logged in but on a public route (except Google OAuth callback), redirect to dashboard
+      navigationTracker.trackNavigation(
+        '/dashboard',
+        'authenticated',
+        'redirect',
+        {
+          fromPath: pathname,
+          redirectReason: 'authenticated_user_on_public_route'
+        }
+      );
       router.push('/dashboard');
     } else if (!isAuthenticated && !isPublicRoute) {
       // User is not logged in but trying to access a protected route (including non-existent routes), redirect to landing page
+      navigationTracker.trackNavigation(
+        '/',
+        'unauthenticated',
+        'redirect',
+        {
+          fromPath: pathname,
+          redirectReason: 'unauthenticated_user_on_protected_route'
+        }
+      );
       router.push('/');
-    } else if (isAuthenticated && !isPublicRoute) {
+    } else if (isAuthenticated && !isPublicRoute && pathname !== '/dashboard') {
       // User is authenticated but on a non-existent route, redirect to dashboard
+      navigationTracker.trackNavigation(
+        '/dashboard',
+        'authenticated',
+        'redirect',
+        {
+          fromPath: pathname,
+          redirectReason: 'authenticated_user_on_invalid_route'
+        }
+      );
       router.push('/dashboard');
     }
   };
